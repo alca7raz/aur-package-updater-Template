@@ -1,0 +1,42 @@
+name: AUR Updater
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: 0 8,12 * * *
+  push:
+    branches:
+      - main
+
+jobs:
+  Updater:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Get Ready
+      env:
+        AUR_PRIVKEY_BASE64: ${{ secrets.AUR_PRIVKEY_BASE64 }}
+      run: |
+        mkdir -p ~/.ssh
+        echo ${AUR_PRIVKEY_BASE64} | base64 -d > ~/.ssh/id_ed25519
+        chmod 0600 ~/.ssh/id_ed25519
+        ssh-keyscan aur.archlinux.org >> ~/.ssh/known_hosts
+
+    - name: Update Protocol
+      env:
+        AUR_NAME: ${{ secrets.AUR_NAME }}
+        AUR_EMAIL: ${{ secrets.AUR_EMAIL }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        REPO: github.com/${{ github.repository }}
+        GH_NAME: "github-actions[bot]"
+        GH_EMAIL: "41898282+github-actions[bot]@users.noreply.github.com"
+        ACTION_WORKSPACE: ${{ github.workspace }}
+      run: |
+        ./updater.sh
+
+    - name: Print Result
+      if: always()
+      run: |
+        cat message

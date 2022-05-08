@@ -1,0 +1,15 @@
+# Maintainer: John Doe <johndoe@gmail.com>
+pkgname="hello-aur"
+pkgver=%%pkgver%%
+pkgrel=1
+pkgdesc="Hello AUR"
+depends=('libxss' 'nss' 'gtk3')
+arch=('x86_64')
+url="https://github.com/alca7raz/aur-package-updater-Template"
+license=('MIT')
+source=("https://github.com/alca7raz/aur-package-updater-Template/releases/download/v$pkgver/hello.zip")
+sha256sums=('%%sha256sum%%')
+
+package() {
+    echo Hello AUR
+}

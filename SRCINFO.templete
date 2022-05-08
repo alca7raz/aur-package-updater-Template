@@ -1,0 +1,14 @@
+pkgbase = hello-aur
+	pkgdesc = Hello AUR
+	pkgver = %%pkgver%%
+	pkgrel = 1
+	url = https://github.com/alca7raz/aur-package-updater-Template
+	arch = x86_64
+	license = MIT
+	depends = libxss
+	depends = nss
+	depends = gtk3
+	source = https://github.com/alca7raz/aur-package-updater-Template/releases/download/v%%pkgver%%/hello.zip
+	sha256sums = %%sha256sum%%
+
+pkgname = hello-aur
